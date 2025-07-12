@@ -1,26 +1,32 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Separator } from '@/components/ui/separator';
-import { useAuth } from '@/hooks/useAuth';
-import { Github, Mail, MessageCircle } from 'lucide-react';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/hooks/useAuth";
+import { Github, Mail, MessageCircle } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Auth = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
-  const { user, signUp, signIn, signInWithProvider } = useAuth();
+  const { user, signUp, signIn } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate("/");
     }
   }, [user, navigate]);
 
@@ -36,14 +42,8 @@ const Auth = () => {
     setLoading(true);
     const { error } = await signIn(email, password);
     if (!error) {
-      navigate('/');
+      navigate("/");
     }
-    setLoading(false);
-  };
-
-  const handleProviderSignIn = async (provider: 'google' | 'github' | 'discord' | 'facebook' | 'twitter' | 'apple') => {
-    setLoading(true);
-    await signInWithProvider(provider);
     setLoading(false);
   };
 
@@ -62,7 +62,9 @@ const Auth = () => {
 
         <Card className="border-border/50 shadow-soft">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center text-foreground">Welcome</CardTitle>
+            <CardTitle className="text-2xl text-center text-foreground">
+              Welcome
+            </CardTitle>
             <CardDescription className="text-center text-muted-foreground">
               Sign in to your account or create a new one
             </CardDescription>
@@ -99,7 +101,7 @@ const Auth = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? 'Signing in...' : 'Sign In'}
+                    {loading ? "Signing in..." : "Sign In"}
                   </Button>
                 </form>
               </TabsContent>
@@ -141,80 +143,10 @@ const Auth = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? 'Creating account...' : 'Sign Up'}
+                    {loading ? "Creating account..." : "Sign Up"}
                   </Button>
                 </form>
               </TabsContent>
-
-              <div className="space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <Separator />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleProviderSignIn('google')}
-                    disabled={loading}
-                    className="w-full"
-                  >
-                    <Mail className="w-4 h-4 mr-2" />
-                    Google
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleProviderSignIn('github')}
-                    disabled={loading}
-                    className="w-full"
-                  >
-                    <Github className="w-4 h-4 mr-2" />
-                    GitHub
-                  </Button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleProviderSignIn('discord')}
-                    disabled={loading}
-                    className="w-full"
-                  >
-                    Discord
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleProviderSignIn('facebook')}
-                    disabled={loading}
-                    className="w-full"
-                  >
-                    Facebook
-                  </Button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleProviderSignIn('twitter')}
-                    disabled={loading}
-                    className="w-full"
-                  >
-                    Twitter
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleProviderSignIn('apple')}
-                    disabled={loading}
-                    className="w-full"
-                  >
-                    Apple
-                  </Button>
-                </div>
-              </div>
             </Tabs>
           </CardContent>
         </Card>
