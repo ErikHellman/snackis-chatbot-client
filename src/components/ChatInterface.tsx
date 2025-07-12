@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChatHeader } from "./ChatHeader";
 import { ChatMessage, Message } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Sparkles } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 // Mock AI responses for demonstration
 const mockResponses = [
@@ -34,22 +36,40 @@ export function ChatInterface() {
   const [isTyping, setIsTyping] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // Check authentication
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
 
   // Load messages from localStorage on mount
   useEffect(() => {
-    const savedMessages = localStorage.getItem("snackis-messages");
-    if (savedMessages) {
-      try {
-        const parsed = JSON.parse(savedMessages);
-        setMessages(parsed.map((msg: any) => ({
-          ...msg,
-          timestamp: new Date(msg.timestamp),
-        })));
-      } catch (error) {
-        console.error("Failed to load saved messages:", error);
+    if (user) {
+      const savedMessages = localStorage.getItem("snackis-messages");
+      if (savedMessages) {
+        try {
+          const parsed = JSON.parse(savedMessages);
+          setMessages(parsed.map((msg: any) => ({
+            ...msg,
+            timestamp: new Date(msg.timestamp),
+          })));
+        } catch (error) {
+          console.error("Failed to load saved messages:", error);
+        }
+      } else {
+        // Personalize welcome message
+        const personalizedWelcome = [{
+          ...welcomeMessages[0],
+          content: `Hello ${user.user_metadata?.full_name || 'there'}! I'm Snackis, your AI companion. I'm here to chat, help, and make your day a little brighter. What would you like to talk about today?`,
+        }];
+        setMessages(personalizedWelcome);
       }
     }
-  }, []);
+  }, [user]);
 
   // Save messages to localStorage when they change
   useEffect(() => {
@@ -103,6 +123,36 @@ export function ChatInterface() {
     setMessages(welcomeMessages);
     localStorage.removeItem("snackis-messages");
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center animate-pulse">
+            <MessageCircle className="w-6 h-6 text-white" />
+          </div>
+          <div className="text-lg font-semibold text-foreground">Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center mx-auto">
+            <MessageCircle className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold text-foreground">Welcome to Snackis</h1>
+          <p className="text-muted-foreground">Please sign in to continue</p>
+          <Button onClick={() => navigate('/auth')}>
+            Sign In
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const isEmpty = messages.length === welcomeMessages.length;
 
