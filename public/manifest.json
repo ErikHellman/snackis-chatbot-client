@@ -1,0 +1,40 @@
+{
+  "name": "FriendlyBot - AI Companion",
+  "short_name": "FriendlyBot",
+  "description": "Your safe and friendly AI chatbot companion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1f5f9",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "utilities", "social"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}
