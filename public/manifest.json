@@ -1,6 +1,6 @@
 {
-  "name": "FriendlyBot - AI Companion",
-  "short_name": "FriendlyBot",
+  "name": "Snackis - AI Companion",
+  "short_name": "Snackis",
   "description": "Your safe and friendly AI chatbot companion",
   "start_url": "/",
   "display": "standalone",

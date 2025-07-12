@@ -1,4 +1,4 @@
-const CACHE_NAME = 'friendlybot-v1';
+const CACHE_NAME = 'snackis-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -99,7 +99,7 @@ self.addEventListener('push', (event) => {
     };
     
     event.waitUntil(
-      self.registration.showNotification('FriendlyBot', options)
+      self.registration.showNotification('Snackis', options)
     );
   }
 });

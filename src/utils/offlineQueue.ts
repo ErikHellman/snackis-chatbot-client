@@ -1,6 +1,6 @@
 import { Message } from "@/components/ChatMessage";
 
-const OFFLINE_QUEUE_KEY = "friendlybot-offline-queue";
+const OFFLINE_QUEUE_KEY = "snackis-offline-queue";
 
 export interface QueuedMessage {
   id: string;

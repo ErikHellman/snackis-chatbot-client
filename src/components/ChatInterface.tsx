@@ -23,7 +23,7 @@ const mockResponses = [
 const welcomeMessages: Message[] = [
   {
     id: "welcome",
-    content: "Hello! I'm FriendlyBot, your AI companion. I'm here to chat, help, and make your day a little brighter. What would you like to talk about today?",
+    content: "Hello! I'm Snackis, your AI companion. I'm here to chat, help, and make your day a little brighter. What would you like to talk about today?",
     isUser: false,
     timestamp: new Date(),
   },
@@ -37,7 +37,7 @@ export function ChatInterface() {
 
   // Load messages from localStorage on mount
   useEffect(() => {
-    const savedMessages = localStorage.getItem("friendlybot-messages");
+    const savedMessages = localStorage.getItem("snackis-messages");
     if (savedMessages) {
       try {
         const parsed = JSON.parse(savedMessages);
@@ -54,7 +54,7 @@ export function ChatInterface() {
   // Save messages to localStorage when they change
   useEffect(() => {
     if (messages.length > welcomeMessages.length) {
-      localStorage.setItem("friendlybot-messages", JSON.stringify(messages));
+      localStorage.setItem("snackis-messages", JSON.stringify(messages));
     }
   }, [messages]);
 
@@ -101,7 +101,7 @@ export function ChatInterface() {
 
   const handleClearChat = useCallback(() => {
     setMessages(welcomeMessages);
-    localStorage.removeItem("friendlybot-messages");
+    localStorage.removeItem("snackis-messages");
   }, []);
 
   const isEmpty = messages.length === welcomeMessages.length;
@@ -126,7 +126,7 @@ export function ChatInterface() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-foreground mb-2">
-                    Welcome to FriendlyBot
+                    Welcome to Snackis
                   </h2>
                   <p className="text-muted-foreground max-w-md">
                     Your safe, friendly AI companion. I'm here to chat, answer questions, 

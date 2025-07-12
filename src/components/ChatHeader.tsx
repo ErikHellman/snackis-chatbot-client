@@ -22,7 +22,7 @@ export function ChatHeader({ onClearChat }: ChatHeaderProps) {
             <Bot className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="font-semibold text-foreground">FriendlyBot</h1>
+            <h1 className="font-semibold text-foreground">Snackis</h1>
             <p className="text-sm text-muted-foreground">Your AI companion</p>
           </div>
         </div>
